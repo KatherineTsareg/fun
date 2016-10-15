@@ -1,26 +1,29 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "TinyXML/tinyxml.h"
+#include "level.h"
+#include "view.h"
+#include "InitialData.h"
 
 using namespace sf;
 
 void start_game() 
 {
-	RenderWindow window(sf::VideoMode(980, 600), "111");
+	RenderWindow window(sf::VideoMode(WINDOWS_WIDTH, WINDOWS_HEIGHT), "111");
+	view.reset(sf::FloatRect(0, 0, WINDOWS_WIDTH, WINDOWS_HEIGHT));
+
+	Level lvl;
+	lvl.LoadFromFile("level2.tmx");
 
 	//генерация текстуры для персонажа//
 	Image hero_image;
 	hero_image.loadFromFile("images/new hero.psd");
 	Texture herotex;
 	herotex.loadFromImage(hero_image);
-	Player player(herotex);
-
-
-	float coordinatePlayerX, coordinatePlayerY = 0;
-	coordinatePlayerX = player.getplayercoordinateX();
-	coordinatePlayerY = player.getplayercoordinateY();
+	Player player(herotex, lvl);
+	
 
 	Clock clock;
-	RectangleShape rectangle(Vector2f(32, 32));
 
 	while (window.isOpen())
 	{
@@ -35,12 +38,12 @@ void start_game()
 				window.close();
 		}
 		
-
-
-		player.Control();
 		player.Player::Update(time);
-		
+
+		SetCoordinateForView(player.getplayercoordinateX(), player.getplayercoordinateY());
+		window.setView(view);
 		window.clear(Color::White);
+		lvl.Draw(window);
 		window.draw(player.sprite);
 		window.display();	
 	}
