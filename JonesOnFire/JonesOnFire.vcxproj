@@ -179,6 +179,7 @@ copy "C:\sdk\SFML-2.4.0\bin\openal32.dll" "$(OutputPath)openal32.dll"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -186,8 +187,10 @@ copy "C:\sdk\SFML-2.4.0\bin\openal32.dll" "$(OutputPath)openal32.dll"</Command>
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="weapons.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="InitialData.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="Player.h" />
@@ -196,6 +199,7 @@ copy "C:\sdk\SFML-2.4.0\bin\openal32.dll" "$(OutputPath)openal32.dll"</Command>
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="View.h" />
+    <ClInclude Include="weapons.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

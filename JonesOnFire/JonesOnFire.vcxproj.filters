@@ -39,6 +39,12 @@
     <ClCompile Include="TinyXML\tinyxml.cpp">
       <Filter>Файлы ресурсов\TinyXML</Filter>
     </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="weapons.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -63,6 +69,12 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="InitialData.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="weapons.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>

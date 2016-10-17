@@ -5,7 +5,7 @@ using namespace sf;
 
 Player::Player(Texture & texture, Level & lvl)
 	: speed(0.1f)
-	, playerScore(0)
+	, score(0)
 	, currentFrame(0)
 	, currentFrameJump(0)
 	, state(STAY)
@@ -68,14 +68,15 @@ void Player::JumpAnimation(float time)
 	if (!onGround)
 	{
 		currentFrameJump += 0.006 * time;
-		if (currentFrameJump > 6) currentFrameJump = 0;
+		if (currentFrameJump > 2) currentFrameJump = 0;
 		if (dx >= 0)
 		{
 			sprite.setTextureRect(IntRect(140 * int(currentFrameJump), 3 * h, 140, h));
+			
 		}
 		else if (dx < 0)
 		{
-			sprite.setTextureRect(IntRect(140 * int(currentFrameJump), 3 * h, 140, h));
+			sprite.setTextureRect(IntRect(140 * int(currentFrameJump), 4 * h, 140, h));
 		}
 	}
 	
@@ -151,6 +152,15 @@ void Player::checkCollisionWithMap(float Dx, float Dy)//ф ция проверки столкнове
 					x = obj[i].rect.left - w; // если идем вправо, то координата Х равна стена(символ 0) минус ширина персонажа
 				if (Dx < 0)
 					x = obj[i].rect.left + obj[i].rect.width;//аналогично идем влево
+			}
+			else if (obj[i].name == "bonus")
+			{
+				obj.erase(obj.begin() + i);
+				score += BONUS_SCORE;
+			}
+			else if (obj[i].name == "enemy")
+			{
+
 			}
 			else { onGround = false; }
 		}
