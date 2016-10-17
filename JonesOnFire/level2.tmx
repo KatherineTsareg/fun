@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="50" tileheight="50" nextobjectid="50">
- <tileset firstgid="1" name="level2" tilewidth="50" tileheight="50" tilecount="1530" columns="102">
+ <tileset firstgid="1" name="level2" tilewidth="50" tileheight="50" tilecount="1530">
   <image source="images/level2.png" width="5100" height="750"/>
  </tileset>
  <layer name="background" width="100" height="15">
@@ -1508,7 +1508,7 @@
   </data>
  </layer>
  <objectgroup name="solid">
-  <object id="1" name="solid" x="2" y="648" width="696" height="102"/>
+  <object id="1" name="solid" x="2" y="654" width="696" height="96"/>
   <object id="2" name="solid" x="301" y="600" width="397" height="48"/>
   <object id="3" name="solid" x="400" y="550" width="198" height="50"/>
   <object id="4" name="solid" x="500" y="500" width="98" height="49"/>
@@ -1536,16 +1536,14 @@
   <object id="29" name="solid" x="8" y="-2" width="4992" height="4"/>
   <object id="30" name="solid" x="4994" y="2" width="4" height="698"/>
  </objectgroup>
- <objectgroup name="hero">
-  <object id="25" name="hero" x="50" y="498" width="76" height="150"/>
- </objectgroup>
  <objectgroup name="enemy">
-  <object id="32" name="enemy" x="856" y="546" width="92" height="152"/>
-  <object id="33" name="enemy" x="1064" y="42" width="92" height="152"/>
-  <object id="34" name="enemy" x="1514" y="194" width="92" height="152"/>
-  <object id="35" name="enemy" x="2122" y="498" width="92" height="152"/>
-  <object id="36" name="enemy" x="3018" y="496" width="92" height="152"/>
-  <object id="37" name="enemy" x="4682" y="196" width="92" height="152"/>
+  <object id="32" name="enemy" x="856" y="546" width="90" height="152"/>
+  <object id="33" name="enemy" x="1064" y="42" width="90" height="152"/>
+  <object id="34" name="enemy" x="1514" y="194" width="90" height="152"/>
+  <object id="35" name="enemy" x="2122" y="498" width="90" height="152"/>
+  <object id="36" name="enemy" x="3018" y="496" width="90" height="152"/>
+  <object id="37" name="enemy" x="4682" y="196" width="90" height="152"/>
+  <object id="25" name="hero" x="8" y="250" width="75" height="152"/>
  </objectgroup>
  <objectgroup name="bonus">
   <object id="38" name="bonus" x="660" y="276" width="69" height="69"/>

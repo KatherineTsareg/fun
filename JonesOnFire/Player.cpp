@@ -4,7 +4,7 @@ using namespace std;
 using namespace sf;
 
 Player::Player(Texture & texture, Level & lvl)
-	: speed(0.1f)
+	: speed(0.2f)
 	, score(0)
 	, currentFrame(0)
 	, currentFrameJump(0)
@@ -12,6 +12,7 @@ Player::Player(Texture & texture, Level & lvl)
 	, dy(0)
 	, onGround(true)
 	, readyToShoot(false)
+	, levelUp(false)
 {
 	Object p = lvl.GetObject("hero");
 	x = (float)p.rect.left;
@@ -28,18 +29,12 @@ void Player::Control()
 	if (Keyboard::isKeyPressed(Keyboard::Left))
 	{
 		state = LEFT;
+		dir = isleft;
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::Right))
 	{
 		state = RIGHT;
-	}
-	else if ((Keyboard::isKeyPressed(Keyboard::Up)) && (onGround))
-	{
-		state = JUMP;
-	}
-	else if (Keyboard::isKeyPressed(Keyboard::X) && (state == SHOOT))
-	{
-		isShoot = true;
+		dir = isright;
 	}
 	else if (state == SHOOT)
 	{
@@ -48,6 +43,15 @@ void Player::Control()
 	else
 	{
 		state = STAY;
+	}
+	if ((Keyboard::isKeyPressed(Keyboard::Up)) && (onGround))
+	{
+		state = JUMP;
+	}
+
+	if (Keyboard::isKeyPressed(Keyboard::X) && (state == SHOOT))
+	{
+		isShoot = true;
 	}
 }
 
@@ -70,6 +74,7 @@ void Player::setTextureRectByState(float time)
 		sprite.setTextureRect(IntRect(w * int(currentFrame), h, w, h));
 		break;
 	case (STAY):
+		//sprite.setTextureRect(IntRect(w * int(currentFrame / 2.f), 0, w, h));
 		break;
 	case (JUMP):
 		dy = -1.f;
@@ -77,11 +82,11 @@ void Player::setTextureRectByState(float time)
 		onGround = false;
 		break;
 	case (SHOOT):
-		if (dx >= 0)
+		if (dir == isright)
 		{
 			sprite.setTextureRect(IntRect(95 * 5, 5 * h, 95, h));
 		}
-		else if (dx < 0)
+		else if (dir == isleft)
 		{
 			sprite.setTextureRect(IntRect(95 * 5, 6 * h, 95, h));
 		}
@@ -112,15 +117,14 @@ void Player::JumpAnimation(float time)
 
 void Player::Update(float time)
 {
-	//std::cout << state << std::endl;
 	if ((readyToShoot) && (currentFrame < 6))
 	{
 		currentFrame += 0.01 * time;
-		if (dx >= 0)
+		if (dir == isright)
 		{
 			sprite.setTextureRect(IntRect(95 * int(currentFrame), 5 * h, 95, h));
 		}
-		else if (dx < 0)
+		else if (dir == isleft)
 		{
 			sprite.setTextureRect(IntRect(95 * int(currentFrame), 6 * h, 95, h));
 		}
@@ -128,6 +132,7 @@ void Player::Update(float time)
 	else if ((readyToShoot) && (!currentFrame < 6))
 	{
 		readyToShoot = false;
+		state = SHOOT;
 		currentFrame = 0;
 		setTextureRectByState(time);
 		JumpAnimation(time);
@@ -157,27 +162,9 @@ FloatRect Player::GetRect()
 	return FloatRect( x, y, w, h );
 }
 
-
-void Player::Collision(float time)//ф-ци€ взаимодействи€ с картой
+bool Player::isLevelUp()
 {
-	for (int i = 0; i < obj.size(); i++)//проходимс€ по объектам
-		if (GetRect().intersects(obj[i].rect))//провер€ем пересечение игрока с объектом
-		{
-			if (obj[i].name == "solid")//если встретили преп€тствие
-			{
-				if (dy > 0) //если мы шли вниз,
-				{
-					y = obj[i].rect.top - h;//то стопорим координату игрек персонажа.
-					onGround = true;
-				}
-				if (dy < 0)
-					y = obj[i].rect.top + obj[i].rect.height;//аналогично с ходьбой вверх. dy<0, значит мы идем вверх
-				if (dx > 0)
-					x = obj[i].rect.left - w; // если идем вправо, то координата ’ равна стена(символ 0) минус ширина персонажа
-				if (dx < 0)
-					x = obj[i].rect.left + obj[i].rect.width;//аналогично идем влево
-			}
-		}
+	return levelUp;
 }
 
 void Player::checkCollisionWithMap(float Dx, float Dy)//ф ци€ проверки столкновений с картой
@@ -208,9 +195,13 @@ void Player::checkCollisionWithMap(float Dx, float Dy)//ф ци€ проверки столкнове
 				obj.erase(obj.begin() + i);
 				score += BONUS_SCORE;
 			}
-			else if (obj[i].name == "enemy")
+			else if ((obj[i].name == "enemy") || (obj[i].name == "solid1"))
 			{
 
+			}
+			else if (obj[i].name == "door")
+			{
+				levelUp = true;
 			}
 			else { onGround = false; }
 		}

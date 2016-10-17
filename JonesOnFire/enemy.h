@@ -21,9 +21,9 @@ public:
 	std::vector<Object> obj;
 	int health;
 	bool life;
+	float currentFrame;
 private:
 	float x, y;
-	float currentFrame, currentFrameJump;
 	float w = 75.f;
 	float h = 152.f;
 	sf::FloatRect rect;
