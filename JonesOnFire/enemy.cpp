@@ -19,7 +19,7 @@ Enemy::Enemy(Texture & texture, Level & lvl, float x, float y, float w, float h)
 	obj = lvl.GetAllObjects();
 	sprite.setPosition(x, y);
 	
-	health = 100;
+	health = 60;
 	life = true;
 }
 
@@ -49,7 +49,9 @@ void Enemy::setTextureRectByState(float time)
 void Enemy::Update(float time)
 {
 	if (health <= 0)
+	{
 		life = false;
+	}
 
 	setTextureRectByState(time);
 

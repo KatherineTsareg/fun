@@ -20,15 +20,14 @@ public:
 	FloatRect GetRect();
 	std::vector<Object> obj;
 	int health;
+	bool life;
 private:
 	float x, y;
 	float currentFrame, currentFrameJump;
 	float w = 75.f;
 	float h = 152.f;
 	sf::FloatRect rect;
-	bool life, stop_move;
 	int dir;
-	float move_time;
 
 	void setTextureRectByState(float time);
 	void Collision(float Dx, float Dy);

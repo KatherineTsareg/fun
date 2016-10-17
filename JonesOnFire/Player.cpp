@@ -36,6 +36,10 @@ void Player::Control()
 	{
 		state = JUMP;
 	}
+	if (Keyboard::isKeyPressed(Keyboard::X))
+	{
+		isShoot = true;
+	}
 }
 
 void Player::setTextureRectByState(float time)

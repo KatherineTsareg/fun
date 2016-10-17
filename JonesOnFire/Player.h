@@ -11,13 +11,14 @@ public:
 	float dx, dy, speed;
 	int score;
 	bool onGround;
-	
+	bool isShoot;
+
 	void Control();
 	void Update(float time);
 	float getplayercoordinateX() { return x; }
 	float getplayercoordinateY() { return y; }
 	sf::Sprite sprite;
-	enum {STAY, LEFT, RIGHT, JUMP, FALL} state;
+	Direction state;
 	FloatRect GetRect();
 	std::vector<Object> obj;
 private:

@@ -23,6 +23,10 @@ void InitTextures(Textures & structure)
 	Image enemy_image;
 	enemy_image.loadFromFile("images/enemy.psd");
 	structure.enemy.loadFromImage(enemy_image);
+
+	Image weapon_image;
+	weapon_image.loadFromFile("images/weapon.psd");
+	structure.weapon.loadFromImage(weapon_image);
 }
 
 void InitEnemiesList(Level & lvl, ObjectsOfTheWorld & obj, Textures & texture, std::vector<Enemy> & enemies)
@@ -34,7 +38,7 @@ void InitEnemiesList(Level & lvl, ObjectsOfTheWorld & obj, Textures & texture, s
 	}
 }
 
-void EntitiesIntersection(ObjectsOfTheWorld &game, vector<Enemy> &enemies, vector<Weapons> &weapons)
+void EntitiesIntersection(ObjectsOfTheWorld &game, vector<Enemy> &enemies, vector<CWeapon> &weapons)
 {
 	for (auto enemy = enemies.begin(); enemy != enemies.end(); enemy++)
 	{
@@ -45,6 +49,7 @@ void EntitiesIntersection(ObjectsOfTheWorld &game, vector<Enemy> &enemies, vecto
 				/////////// ÏÅÐÅÑÅ×ÅÍÈÅ ÂÐÀÃÀ Ñ ÏÓËÅÉ È ÓÌÅÍÜØÅÍÈÅ ÆÈÇÍÈ /////////////////
 				weapon->life = false;
 				enemy->health -= 40;
+				//std::cout << "die" << std::endl;
 			}
 		}
 	}
@@ -67,17 +72,41 @@ void DrawListObjects(RenderWindow & window, float time, std::vector<Object> cons
 	}
 }
 
-void DrawAllObjects(RenderWindow & window, Level & lvl, Player & hero, ObjectsOfTheWorld & worldObj, Textures & textures, float time, std::vector<Enemy> & enemies)
+void DrawAllObjects(RenderWindow & window, Level & lvl, Player & hero, ObjectsOfTheWorld & worldObj, Textures & textures, float time, std::vector<Enemy> & enemies, std::vector<CWeapon> & weapons)
 {
-	for (Enemy &enemy : enemies)
+	for (auto it = enemies.begin(); it != enemies.end();)
 	{
-		enemy.Update(time);
+		it->Update(time);
+		
+		if (!it->life)
+		{
+			it = enemies.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+	for (auto it = weapons.begin(); it != weapons.end();)
+	{
+		it->Update(time);
+		if (!it->life)
+		{
+			it = weapons.erase(it);
+		}
+		else
+		{
+			it++;
+		}
 	}
 	window.clear(Color::White);
 	lvl.Draw(window);
 	DrawListObjects(window, time, hero.obj, "bonus", textures.bonus1, 0, 0, worldObj.bonusCurrentFrame);
+	for (CWeapon &weapon : weapons)
+	{
+		window.draw(weapon.sprite);
+	}
 	window.draw(hero.sprite);
-
 	for (Enemy enemy : enemies)
 	{
 		window.draw(enemy.sprite);
@@ -88,6 +117,7 @@ void DrawAllObjects(RenderWindow & window, Level & lvl, Player & hero, ObjectsOf
 void StartGame(RenderWindow & window, Textures & textures)
 {
 	std::vector<Enemy> enemies;
+	std::vector<CWeapon> weapons;
 	Level lvl;
 	lvl.LoadFromFile("level1.tmx");
 	Player player(textures.hero, lvl);
@@ -107,13 +137,24 @@ void StartGame(RenderWindow & window, Textures & textures)
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (player.isShoot == true)
+			{
+				weapons.push_back(CWeapon(textures.weapon, player, lvl, time));
+				player.isShoot = false;
+			}
 		}
 		
 		player.Player::Update(time);
 
+		for (CWeapon &weapon : weapons)
+		{
+			weapon.Update(time);
+		}
+
 		SetCoordinateForView(player.getplayercoordinateX(), player.getplayercoordinateY());
 		window.setView(view);
-		DrawAllObjects(window, lvl, player, worldObj, textures, time, enemies);
+		EntitiesIntersection(worldObj, enemies, weapons);
+		DrawAllObjects(window, lvl, player, worldObj, textures, time, enemies, weapons);
 	}
 }
 
