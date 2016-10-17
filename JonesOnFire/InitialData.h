@@ -6,7 +6,7 @@ const size_t WINDOWS_WIDTH = 980;
 const size_t WINDOWS_HEIGHT = 600;
 const int BONUS_SCORE = 20;
 
-typedef enum Direction{ STAY, LEFT, RIGHT, JUMP, FALL };
+typedef enum Direction{ STAY, LEFT, RIGHT, JUMP, FALL, SHOOT };
 
 struct Textures
 {
@@ -18,7 +18,6 @@ struct Textures
 struct ObjectsOfTheWorld
 {
 	float bonusCurrentFrame = 0;
-	//std::vector<Enemy> enemies;
 	
 };
 

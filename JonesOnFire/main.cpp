@@ -49,7 +49,6 @@ void EntitiesIntersection(ObjectsOfTheWorld &game, vector<Enemy> &enemies, vecto
 				/////////// ÏÅÐÅÑÅ×ÅÍÈÅ ÂÐÀÃÀ Ñ ÏÓËÅÉ È ÓÌÅÍÜØÅÍÈÅ ÆÈÇÍÈ /////////////////
 				weapon->life = false;
 				enemy->health -= 40;
-				//std::cout << "die" << std::endl;
 			}
 		}
 	}
@@ -72,12 +71,12 @@ void DrawListObjects(RenderWindow & window, float time, std::vector<Object> cons
 	}
 }
 
-void DrawAllObjects(RenderWindow & window, Level & lvl, Player & hero, ObjectsOfTheWorld & worldObj, Textures & textures, float time, std::vector<Enemy> & enemies, std::vector<CWeapon> & weapons)
+void UpdateAndDrawEnemiesAndWeapons(RenderWindow & window, std::vector<Enemy> & enemies, std::vector<CWeapon> & weapons, float time)
 {
 	for (auto it = enemies.begin(); it != enemies.end();)
 	{
 		it->Update(time);
-		
+
 		if (!it->life)
 		{
 			it = enemies.erase(it);
@@ -99,18 +98,23 @@ void DrawAllObjects(RenderWindow & window, Level & lvl, Player & hero, ObjectsOf
 			it++;
 		}
 	}
-	window.clear(Color::White);
-	lvl.Draw(window);
-	DrawListObjects(window, time, hero.obj, "bonus", textures.bonus1, 0, 0, worldObj.bonusCurrentFrame);
 	for (CWeapon &weapon : weapons)
 	{
 		window.draw(weapon.sprite);
 	}
-	window.draw(hero.sprite);
 	for (Enemy enemy : enemies)
 	{
 		window.draw(enemy.sprite);
 	}
+}
+
+void DrawAllObjects(RenderWindow & window, Level & lvl, Player & hero, ObjectsOfTheWorld & worldObj, Textures & textures, float time, std::vector<Enemy> & enemies, std::vector<CWeapon> & weapons)
+{
+	window.clear(Color::White);
+	lvl.Draw(window);
+	DrawListObjects(window, time, hero.obj, "bonus", textures.bonus1, 0, 0, worldObj.bonusCurrentFrame);
+	UpdateAndDrawEnemiesAndWeapons(window, enemies, weapons, time);
+	window.draw(hero.sprite);
 	window.display();
 }
 
@@ -141,6 +145,12 @@ void StartGame(RenderWindow & window, Textures & textures)
 			{
 				weapons.push_back(CWeapon(textures.weapon, player, lvl, time));
 				player.isShoot = false;
+			}
+			if ((event.type == event.KeyReleased) && (event.key.code == Keyboard::Z))
+			{
+				player.state = ((player.state != SHOOT) ? SHOOT : player.state);
+				player.currentFrame = 0;
+				player.readyToShoot = true;
 			}
 		}
 		

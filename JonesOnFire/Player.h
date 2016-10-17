@@ -12,6 +12,8 @@ public:
 	int score;
 	bool onGround;
 	bool isShoot;
+	bool readyToShoot;
+	float currentFrame;
 
 	void Control();
 	void Update(float time);
@@ -23,11 +25,13 @@ public:
 	std::vector<Object> obj;
 private:
 	float x, y;
-	float currentFrame, currentFrameJump;
+	float currentFrameJump;
 	float w = 75.f;
 	float h = 152.f;
 	sf::FloatRect rect;
 	bool jump;
+
+	void ShootAnimation();
 	
 
 	void setTextureRectByState(float time);

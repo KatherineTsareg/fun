@@ -11,6 +11,7 @@ Player::Player(Texture & texture, Level & lvl)
 	, state(STAY)
 	, dy(0)
 	, onGround(true)
+	, readyToShoot(false)
 {
 	Object p = lvl.GetObject("hero");
 	x = (float)p.rect.left;
@@ -24,22 +25,34 @@ Player::Player(Texture & texture, Level & lvl)
 
 void Player::Control()
 {
-	if ((Keyboard::isKeyPressed(Keyboard::Left)) & (state != JUMP))
+	if (Keyboard::isKeyPressed(Keyboard::Left))
 	{
 		state = LEFT;
 	}
-	if ((Keyboard::isKeyPressed(Keyboard::Right))& (state != JUMP))
+	else if (Keyboard::isKeyPressed(Keyboard::Right))
 	{
 		state = RIGHT;
 	}
-	if ((Keyboard::isKeyPressed(Keyboard::Up)) && (onGround))
+	else if ((Keyboard::isKeyPressed(Keyboard::Up)) && (onGround))
 	{
 		state = JUMP;
 	}
-	if (Keyboard::isKeyPressed(Keyboard::X))
+	else if (Keyboard::isKeyPressed(Keyboard::X) && (state == SHOOT))
 	{
 		isShoot = true;
 	}
+	else if (state == SHOOT)
+	{
+
+	}
+	else
+	{
+		state = STAY;
+	}
+}
+
+void Player::ShootAnimation()
+{
 }
 
 void Player::setTextureRectByState(float time)
@@ -60,8 +73,18 @@ void Player::setTextureRectByState(float time)
 		break;
 	case (JUMP):
 		dy = -1.f;
-		dx = 0.2f;
+		dx = 0.6f;
 		onGround = false;
+		break;
+	case (SHOOT):
+		if (dx >= 0)
+		{
+			sprite.setTextureRect(IntRect(95 * 5, 5 * h, 95, h));
+		}
+		else if (dx < 0)
+		{
+			sprite.setTextureRect(IntRect(95 * 5, 6 * h, 95, h));
+		}
 		break;
 	}
 		
@@ -75,24 +98,47 @@ void Player::JumpAnimation(float time)
 		if (currentFrameJump > 2) currentFrameJump = 0;
 		if (dx >= 0)
 		{
-			sprite.setTextureRect(IntRect(140 * int(currentFrameJump), 3 * h, 140, h));
+			sprite.setTextureRect(IntRect(86 * int(currentFrameJump), 3 * h, 86, h));
 			
 		}
 		else if (dx < 0)
 		{
-			sprite.setTextureRect(IntRect(140 * int(currentFrameJump), 4 * h, 140, h));
+			sprite.setTextureRect(IntRect(86 * int(currentFrameJump), 4 * h, 86, h));
 		}
 	}
 	
 }
 
+
 void Player::Update(float time)
 {
+	//std::cout << state << std::endl;
+	if ((readyToShoot) && (currentFrame < 6))
+	{
+		currentFrame += 0.01 * time;
+		if (dx >= 0)
+		{
+			sprite.setTextureRect(IntRect(95 * int(currentFrame), 5 * h, 95, h));
+		}
+		else if (dx < 0)
+		{
+			sprite.setTextureRect(IntRect(95 * int(currentFrame), 6 * h, 95, h));
+		}
+	}
+	else if ((readyToShoot) && (!currentFrame < 6))
+	{
+		readyToShoot = false;
+		currentFrame = 0;
+		setTextureRectByState(time);
+		JumpAnimation(time);
+	}
+	else if (!readyToShoot)
+	{
+		setTextureRectByState(time);
+		JumpAnimation(time);
+	}
+
 	Control();
-	setTextureRectByState(time);
-	JumpAnimation(time);
-	state = STAY;
-	
 	if (!onGround)
 	{
 		dy += time * 0.0015f;

@@ -17,7 +17,7 @@ void CWeapon::Update(float time)
 
 	x += dx * time;
 	y += dy * time;
-	sprite.setPosition(x + heroRect.width / 2, y + heroRect.height / 2);
+	sprite.setPosition(x + heroRect.width / 2, y + 84);
 }
 
 void CWeapon::interactionWithMap()//ф-ция взаимодействия с картой
