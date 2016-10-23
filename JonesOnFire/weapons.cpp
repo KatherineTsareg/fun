@@ -13,7 +13,7 @@ CWeapon::CWeapon(Texture & texture, Player & hero, Level &lvl, float time, Textu
 	x = hero.getplayercoordinateX();
 	y = hero.getplayercoordinateY();
 	dir = (hero.dir == isright ? RIGHT : LEFT);
-	speed = 0.4f;
+	speed = 0.8f;
 	life = true;
 	obj = lvl.GetObjects("solid");
 
@@ -25,7 +25,7 @@ void CWeapon::Update(float time)
 {
 	if (born)
 	{
-		currentFrame += 0.003 * time;
+		currentFrame += 0.01 * time;
 		if (currentFrame > 3) born = false;
 		bang.setTextureRect(IntRect(0, 40 * (int)currentFrame, 50, 40));
 		if (dir == RIGHT) bang.setPosition(x + heroRect.width + 45, y + 84);

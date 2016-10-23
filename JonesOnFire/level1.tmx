@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="50" tileheight="50" nextobjectid="60">
- <tileset firstgid="1" name="level1" tilewidth="50" tileheight="50" tilecount="1560">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="50" tileheight="50" nextobjectid="127">
+ <tileset firstgid="1" name="level1" tilewidth="50" tileheight="50" tilecount="1560" columns="104">
   <image source="images/level1.png" width="5200" height="750"/>
  </tileset>
  <layer name="Слой тайлов 1" width="100" height="15">
@@ -1552,6 +1552,70 @@
   <object id="55" name="solid1" x="3718.5" y="85.5" width="19" height="223"/>
   <object id="58" name="solid1" x="4178.5" y="371.5" width="19" height="223"/>
   <object id="59" name="door" x="4573" y="349" width="61" height="163"/>
+  <object id="60" name="star" x="568.333" y="106.667" width="25.67" height="25.67"/>
+  <object id="61" name="star" x="245" y="163.333" width="25.67" height="25.67"/>
+  <object id="62" name="star" x="645" y="368.333" width="25.67" height="25"/>
+  <object id="63" name="star" x="73.3333" y="475" width="25.33" height="25.67"/>
+  <object id="64" name="star" x="826.667" y="283.333" width="25" height="25"/>
+  <object id="65" name="star" x="453.333" y="263.333" width="25" height="25.67"/>
+  <object id="66" name="star" x="1268.33" y="70" width="25" height="25.33"/>
+  <object id="67" name="star" x="880" y="96.6667" width="25.67" height="25.33"/>
+  <object id="68" name="star" x="1935" y="111.667" width="25.67" height="25.33"/>
+  <object id="70" name="star" x="2440" y="101.667" width="25.33" height="25.33"/>
+  <object id="71" name="star" x="2611.67" y="325" width="25.33" height="25.67"/>
+  <object id="72" name="star" x="2955" y="136.667" width="25.33" height="25"/>
+  <object id="73" name="star" x="3423.33" y="43.3333" width="25.33" height="25.33"/>
+  <object id="74" name="star" x="2455" y="230" width="25.67" height="25"/>
+  <object id="75" name="star" x="3291.67" y="41.6667" width="25.33" height="25.33"/>
+  <object id="76" name="star" x="4000" y="321.667" width="25.67" height="25"/>
+  <object id="77" name="star" x="4338.33" y="125" width="25.67" height="25"/>
+  <object id="78" name="star" x="4560" y="135" width="25" height="25.67"/>
+  <object id="79" name="star" x="2808.33" y="96.6667" width="25.67" height="25"/>
+  <object id="80" name="star" x="1175" y="316.667" width="25.33" height="25.33"/>
+  <object id="81" name="star" x="1808.33" y="116.667" width="25.33" height="25.33"/>
+  <object id="82" name="star" x="2290" y="116.667" width="25.67" height="25"/>
+  <object id="83" name="star" x="3190" y="53.3333" width="25.33" height="25"/>
+  <object id="84" name="star" x="3888.33" y="370" width="25.67" height="25.33"/>
+  <object id="85" name="star" x="3373.33" y="118.333" width="25" height="25.67"/>
+  <object id="86" name="star" x="2596.67" y="45" width="25.67" height="25"/>
+  <object id="87" name="star" x="1598.33" y="68.3333" width="25.67" height="25"/>
+  <object id="88" name="star" x="1885" y="425" width="25" height="25.33"/>
+  <object id="89" name="star" x="2258.33" y="230" width="25.67" height="25.33"/>
+  <object id="91" name="star" x="2652.34" y="145.498" width="25.33" height="25.67"/>
+  <object id="92" name="star" x="3804" y="378.832" width="25.33" height="25.67"/>
+  <object id="93" name="star" x="4502.34" y="38.8317" width="25.33" height="25.67"/>
+  <object id="94" name="star" x="3907.34" y="53.8317" width="25.33" height="25.67"/>
+  <object id="95" name="star" x="3999" y="37.165" width="25.33" height="25.67"/>
+  <object id="96" name="star" x="417.335" y="40.4983" width="25.33" height="25.67"/>
+  <object id="97" name="star" x="620.668" y="175.498" width="25.33" height="25.67"/>
+  <object id="98" name="star" x="764.002" y="405.498" width="25.33" height="25.67"/>
+  <object id="99" name="star" x="544.002" y="358.832" width="25.33" height="25.67"/>
+  <object id="100" name="star" x="730.668" y="173.832" width="25.33" height="25.67"/>
+  <object id="101" name="star" x="1177.34" y="50.4983" width="25.33" height="25.67"/>
+  <object id="102" name="star" x="787.335" y="62.165" width="25.33" height="25.67"/>
+  <object id="103" name="star" x="1379" y="350.498" width="25.33" height="25.67"/>
+  <object id="104" name="star" x="1240.67" y="367.165" width="25.33" height="25.67"/>
+  <object id="105" name="star" x="1384" y="158.832" width="25.33" height="25.67"/>
+  <object id="106" name="star" x="1552.34" y="175.498" width="25.33" height="25.67"/>
+  <object id="107" name="star" x="1734" y="50.4983" width="25.33" height="25.67"/>
+  <object id="108" name="star" x="1907.34" y="248.832" width="25.33" height="25.67"/>
+  <object id="109" name="star" x="2050.67" y="267.165" width="25.33" height="25.67"/>
+  <object id="110" name="star" x="2542.34" y="275.498" width="25.33" height="25.67"/>
+  <object id="111" name="star" x="2524" y="403.832" width="25.33" height="25.67"/>
+  <object id="112" name="star" x="3082.34" y="23.8317" width="25.33" height="25.67"/>
+  <object id="113" name="star" x="3049" y="147.165" width="25.33" height="25.67"/>
+  <object id="114" name="star" x="2910.67" y="27.165" width="25.33" height="25.67"/>
+  <object id="115" name="star" x="3990.67" y="395.498" width="25.33" height="25.67"/>
+  <object id="116" name="star" x="4090.67" y="350.498" width="25.33" height="25.67"/>
+  <object id="117" name="star" x="4252.34" y="118.832" width="25.33" height="25.67"/>
+  <object id="118" name="star" x="3767.34" y="127.165" width="25.33" height="25.67"/>
+  <object id="119" name="star" x="3842.34" y="107.165" width="25.33" height="25.67"/>
+  <object id="120" name="star" x="370.668" y="120.498" width="25.33" height="25.67"/>
+  <object id="121" name="star" x="104.002" y="37.165" width="25.33" height="25.67"/>
+  <object id="122" name="star" x="512.335" y="453.832" width="25.33" height="25.67"/>
+  <object id="123" name="star" x="2367.34" y="197.165" width="25.33" height="25.67"/>
+  <object id="124" name="star" x="2229" y="295.498" width="25.33" height="25.67"/>
+  <object id="125" name="star" x="3287.34" y="125.498" width="25.33" height="25.67"/>
  </objectgroup>
  <objectgroup name="people">
   <object id="21" name="enemy" x="1090.67" y="445.333" width="90" height="152"/>

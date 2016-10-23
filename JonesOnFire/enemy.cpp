@@ -51,7 +51,24 @@ void Enemy::Update(float time)
 	if (life)
 	{
 		setTextureRectByState(time);
-
+		if (hurt)
+		{
+			if (hurt_time < 3)
+			{
+				hurt_time += time * 0.001;
+				hurtCurrentFrame += time * 0.005;
+				if ((dx > 0) && (hurtCurrentFrame <= 2))
+					sprite.setTextureRect(IntRect(111 * (int)hurtCurrentFrame, h * 4, 111, 152));
+				else if ((dx < 0) && (hurtCurrentFrame <= 2))
+					sprite.setTextureRect(IntRect(111 * (int)hurtCurrentFrame, h * 5, 111, 152));
+			}
+			else
+			{
+				hurt = false;
+				hurt_time = 0;
+				hurtCurrentFrame = 0;
+			}
+		}
 		if (!onGround)
 		{
 			dy += time * 0.0015f;
@@ -62,7 +79,7 @@ void Enemy::Update(float time)
 		Collision(0, dy);
 		sprite.setPosition(x, y);
 		dy += 0.0015 * time;
-		dx = 0;
+		//dx = 0;
 	}
 	else
 	{

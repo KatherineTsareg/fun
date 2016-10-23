@@ -5,7 +5,6 @@ using namespace sf;
 
 Player::Player(Texture & texture, Level & lvl)
 	: speed(0.2f)
-	, score(0)
 	, currentFrame(0)
 	, currentFrameJump(0)
 	, state(STAY)
@@ -13,6 +12,7 @@ Player::Player(Texture & texture, Level & lvl)
 	, onGround(true)
 	, readyToShoot(false)
 	, levelUp(false)
+	, hurt(false)
 {
 	Object p = lvl.GetObject("hero");
 	x = (float)p.rect.left;
@@ -74,7 +74,6 @@ void Player::setTextureRectByState(float time)
 		sprite.setTextureRect(IntRect(w * int(currentFrame), h, w, h));
 		break;
 	case (STAY):
-		//sprite.setTextureRect(IntRect(w * int(currentFrame / 2.f), 0, w, h));
 		break;
 	case (JUMP):
 		dy = -1.f;
@@ -91,6 +90,14 @@ void Player::setTextureRectByState(float time)
 			sprite.setTextureRect(IntRect(95 * 5, 6 * h, 95, h));
 		}
 		break;
+	}
+	if (hurt)
+	{
+		sprite.setColor(Color::Red);
+	}
+	else
+	{
+		sprite.setColor(Color::White);
 	}
 		
 }
@@ -111,50 +118,84 @@ void Player::JumpAnimation(float time)
 			sprite.setTextureRect(IntRect(86 * int(currentFrameJump), 4 * h, 86, h));
 		}
 	}
-	
 }
 
 
-void Player::Update(float time)
+void Player::Update(float time, ObjectsOfTheWorld & world)
 {
-	if ((readyToShoot) && (currentFrame < 6))
+	if ((world.health <= 20) && (world.score >= 100))
 	{
-		currentFrame += 0.01 * time;
-		if (dir == isright)
+		world.health = 100;
+		world.score -= 100;
+	}
+	if (world.health <= 0)
+	{
+		world.health = 0;
+		if (endFrame < 4)
 		{
-			sprite.setTextureRect(IntRect(95 * int(currentFrame), 5 * h, 95, h));
+			endFrame += time * 0.001;
+			sprite.setTextureRect(IntRect(152 * (int)endFrame, 153 * 7, 152, 150));
 		}
-		else if (dir == isleft)
+		else
 		{
-			sprite.setTextureRect(IntRect(95 * int(currentFrame), 6 * h, 95, h));
+			sprite.setTextureRect(IntRect(152 * 3, 153 * 7, 152, 150));
 		}
+		if (!onGround)
+		{
+			dy += time * 0.0015f;
+		}
+		sprite.setPosition(x , y);
 	}
-	else if ((readyToShoot) && (!currentFrame < 6))
+	else
 	{
-		readyToShoot = false;
-		state = SHOOT;
-		currentFrame = 0;
-		setTextureRectByState(time);
-		JumpAnimation(time);
-	}
-	else if (!readyToShoot)
-	{
-		setTextureRectByState(time);
-		JumpAnimation(time);
-	}
+		if ((readyToShoot) && (currentFrame < 6))
+		{
+			currentFrame += 0.01 * time;
+			if (dir == isright)
+			{
+				sprite.setTextureRect(IntRect(95 * int(currentFrame), 5 * h, 95, h));
+			}
+			else if (dir == isleft)
+			{
+				sprite.setTextureRect(IntRect(95 * int(currentFrame), 6 * h, 95, h));
+			}
+		}
+		else if ((readyToShoot) && (!currentFrame < 6))
+		{
+			readyToShoot = false;
+			state = SHOOT;
+			currentFrame = 0;
+			setTextureRectByState(time);
+			JumpAnimation(time);
+		}
+		else if (!readyToShoot)
+		{
+			setTextureRectByState(time);
+			JumpAnimation(time);
+		}
 
-	Control();
-	if (!onGround)
-	{
-		dy += time * 0.0015f;
+		Control();
+		if (!onGround)
+		{
+			dy += time * 0.0015f;
+		}
+		if (hurt && (hurtTime > 2))
+		{
+			hurtTime = 0;
+			hurt = false;
+		}
+		else if (hurt && (hurtTime <= 2))
+		{
+			hurtTime += time * 0.005;
+		}
+		x += dx * time;
+		checkCollisionWithMap(dx, 0, world);
+		y += dy * time;
+		checkCollisionWithMap(0, dy, world);
+		sprite.setPosition(x, y);
+		dy += 0.0015 * time;
+		dx = 0;
 	}
-	x += dx * time;
-	checkCollisionWithMap(dx, 0);
-	y += dy * time;
-	checkCollisionWithMap(0, dy);
-	sprite.setPosition(x, y);
-	dy += 0.0015 * time;
-	dx = 0;
 }
 
 FloatRect Player::GetRect()
@@ -167,7 +208,7 @@ bool Player::isLevelUp()
 	return levelUp;
 }
 
-void Player::checkCollisionWithMap(float Dx, float Dy)//ф ция проверки столкновений с картой
+void Player::checkCollisionWithMap(float Dx, float Dy, ObjectsOfTheWorld & world)//ф ция проверки столкновений с картой
 {
 	for (int i = 0; i < obj.size(); i++)//проходимся по объектам
 		if (GetRect().intersects(obj[i].rect))//проверяем пересечение игрока с объектом
@@ -193,9 +234,10 @@ void Player::checkCollisionWithMap(float Dx, float Dy)//ф ция проверки столкнове
 			else if (obj[i].name == "bonus")
 			{
 				obj.erase(obj.begin() + i);
-				score += BONUS_SCORE;
+				world.score += BONUS_SCORE;
+				//health += BONUS_SCORE;
 			}
-			else if ((obj[i].name == "enemy") || (obj[i].name == "solid1"))
+			else if ((obj[i].name == "enemy") || (obj[i].name == "solid1") || (obj[i].name == "star"))
 			{
 
 			}

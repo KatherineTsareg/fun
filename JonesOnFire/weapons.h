@@ -17,8 +17,8 @@ public:
 	float dx = 0;
 	float dy = 0;
 	int w, h;
-	float speed = 0.2f;
-	float currentFrame;
+	float speed;
+	float currentFrame = 0;
 	IntRect rect;
 	FloatRect heroRect;
 	Direction dir;

@@ -9,14 +9,14 @@ public:
 	Player(sf::Texture & texture, Level & lvl);
 
 	float dx, dy, speed;
-	int score;
 	bool onGround;
 	bool isShoot;
 	bool readyToShoot;
 	float currentFrame;
-
+	bool gameOver = false;
 	void Control();
-	void Update(float time);
+
+	void Update(float time, ObjectsOfTheWorld & world);
 	float getplayercoordinateX() { return x; }
 	float getplayercoordinateY() { return y; }
 	sf::Sprite sprite;
@@ -25,7 +25,9 @@ public:
 	std::vector<Object> obj;
 	direct dir;
 	bool isLevelUp();
+	bool hurt;
 private:
+	float endFrame = 0;
 	float x, y;
 	float currentFrameJump;
 	float w = 75.f;
@@ -33,10 +35,11 @@ private:
 	sf::FloatRect rect;
 	bool jump;
 	bool levelUp;
+	float hurtTime;
 
 	void ShootAnimation();
 	
 	void setTextureRectByState(float time);
-	void checkCollisionWithMap(float Dx, float Dy);
+	void checkCollisionWithMap(float Dx, float Dy, ObjectsOfTheWorld & world);
 	void JumpAnimation(float time);
 };

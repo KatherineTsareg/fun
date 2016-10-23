@@ -11,7 +11,7 @@ public:
 	float dx, dy, speed;
 	int score;
 	bool onGround;
-
+	bool hurt = false;
 	void Update(float time);
 	float getplayercoordinateX() { return x; }
 	float getplayercoordinateY() { return y; }
@@ -23,6 +23,8 @@ public:
 	bool life;
 	float currentFrame;
 private:
+	float hurt_time = 0;
+	float hurtCurrentFrame = 0;
 	float x, y;
 	float w = 75.f;
 	float h = 152.f;

@@ -14,12 +14,18 @@ struct Textures
 	sf::Texture bonus1, bonus2;
 	sf::Texture hero, enemy;
 	sf::Texture weapon, bang;
+	sf::Texture star;
+	sf::Texture endGame;
+	sf::Font font;
 };
 
 struct ObjectsOfTheWorld
 {
 	float bonusCurrentFrame = 0;
+	float starCurrentFrame = 0;
 	size_t level = 1;
 	bool newLevel = false;
+	int score = 0;
+	int health = 100;
 };
 
